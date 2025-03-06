@@ -1,44 +1,60 @@
 import streamlit as st
 
-# Define conversion_factors globally
-conversion_factors = {
-    "Length": {
-        "Meter": 1, "Kilometer": 0.001, "Centimeter": 100, "Millimeter": 1000,
-        "Mile": 0.000621371, "Yard": 1.09361, "Foot": 3.28084, "Inch": 39.3701
-    },
-    "Weight": {
-        "Kilogram": 1, "Gram": 1000, "Milligram": 1e6, "Pound": 2.20462, "Ounce": 35.274
-    },
-    "Temperature": {
-        "Celsius": lambda x: x, "Fahrenheit": lambda x: (x * 9/5) + 32, "Kelvin": lambda x: x + 273.15
-    }
-}
+# Custom CSS for styling the profile card
+st.markdown("""
+    <style>
+        .profile-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 50%;
+            margin: auto;
+        }
+        .profile-pic {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            border: 3px solid #007bff;
+        }
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .bio {
+            font-size: 16px;
+            color: #555;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-def convert_units(value, from_unit, to_unit, category):
-    if category == "Temperature":
-        if from_unit == "Celsius":
-            return conversion_factors[category][to_unit](value)
-        elif from_unit == "Fahrenheit":
-            celsius = (value - 32) * 5/9
-            return conversion_factors[category][to_unit](celsius)
-        elif from_unit == "Kelvin":
-            celsius = value - 273.15
-            return conversion_factors[category][to_unit](celsius)
-    else:
-        base_value = value / conversion_factors[category][from_unit]
-        return base_value * conversion_factors[category][to_unit]
+# Profile Card
+st.markdown("""
+    <div class="profile-container">
+        <img src="https://via.placeholder.com/150" class="profile-pic">
+        <p class="name">Suhail Ahmed Aamro</p>
+        <p class="bio">Web Developer | AI Enthusiast | Tech Explorer</p>
+        <a href="https://github.com" target="_blank">
+            <button class="button">Visit My GitHub</button>
+        </a>
+    </div>
+""", unsafe_allow_html=True)
 
-# Streamlit UI
-st.title("Unit Converter")
-st.sidebar.header("Choose Conversion Type")
-category = st.sidebar.selectbox("Select a category", ["Length", "Weight", "Temperature"])
-
-if category:
-    units = list(conversion_factors[category].keys())  # Now accessible globally
-    from_unit = st.selectbox("From Unit", units)
-    to_unit = st.selectbox("To Unit", units)
-    value = st.number_input("Enter Value", min_value=0.0, format="%.5f")
-    
-    if st.button("Convert"):
-        result = convert_units(value, from_unit, to_unit, category)
-        st.success(f"{value} {from_unit} = {result:.5f} {to_unit}")
+# User Interaction
+if st.button("Click to Say Hello"):
+    st.success("Hello, welcome to my Streamlit App! 🎉")
